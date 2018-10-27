@@ -1,16 +1,35 @@
 const CONFIG = {
   assetsPath : '/assets/images/',
-  SpritesPos: {
+  imagesNames: {
+    header: "header.png",
+    showdown_off: "showdown-off.png",
+    bolt_off: "bolt-off@2x.png",
+    bolt: "bolt@2x.png",
+    d: "d@2x.png",
+    h: "h@2x.png",
+    n: "n@2x.png",
+    o_1: "o-1@2x.png",
+    o_2: "o-2@2x.png",
+    s: "s@2x.png",
+    slots: "slots@2x.png",
+    vegas: "vegas@2x.png",
+    w_1: "w-1@2x.png",
+    w_2: "w-2@2x.png",
+    must_drop: "must_drop.png",
+  },
+  SpritesPositions: {
     bolt: {
       x: 345,
-      y: -46,
-      alpha:1,
+      y: -26,
+      alpha:0,
     },
     bolt_off: {
       alpha: 0
     },
     showdown_off: {
-      alpha:1
+      alpha:1,
+      y:20,
+      x:0,
     },
     header: {
       alpha:1,
@@ -18,54 +37,56 @@ const CONFIG = {
     slots: {
       alpha:0,
       x: 435,
-      y:-10,
+      y:10,
     },
     vegas: {
       alpha: 0,
       x: 55,
-      y:-10,
+      y:10,
     },
     must_drop: {
-      alpha: 0
+      alpha: 0,
+      x: 90,
+      y: 230
     },
     s: {
       x: -60,
-      y: 5,
+      y: 25,
       alpha:0,
     },
     h: {
       x: 36,
-      y: 5,
+      y: 25,
       alpha:0,
     },
     o_1: {
       x: 190,
-      y: 5,
+      y: 25,
       alpha:0,
     },
     w_1: {
       x: 235,
-      y: 5,
+      y: 25,
       alpha:0,
     },
     d: {
       x: 350,
-      y: 5,
+      y: 25,
       alpha:0,
     },
     o_2: {
       x:435,
-      y:5,
+      y:25,
       alpha:0,
     },
     w_2: {
       x:520,
-      y:5,
+      y:25,
       alpha:0,
     },
     n: {
       x:610,
-      y:5,
+      y:25,
       alpha:0,
     }
   }

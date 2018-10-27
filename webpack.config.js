@@ -6,9 +6,9 @@ module.exports = {
 
   entry: './src/index.js',
   output: {
-    path: path.resolve(__dirname, "dist"),
-    filename: "main.js",
-    publicPath: "/"
+    path: path.resolve(__dirname, 'dist'),
+    filename: 'main.js',
+    publicPath: '/'
   },
   devServer: {
     contentBase: path.join(__dirname, 'dist'),
@@ -28,7 +28,7 @@ module.exports = {
     rules: [
       {
         test: /\.m?js$/,
-        exclude: /(node_modules|bower_components)/,
+        exclude: /(node_modules)/,
         use: {
           loader: 'babel-loader',
           options: {

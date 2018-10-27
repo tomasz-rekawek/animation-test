@@ -2,85 +2,32 @@
 import pixi from 'pixi.js';
 import utils from './utils';
 import Config from '../config';
-const PLAYBACK_SPEED = 0.25;
+import animationQ from './animationQueue';
+const PLAY_SPEED = 1;
 let PixiApp = new PIXI.Application({ 
     width: 802,         // default: 800
-    height: 336,        // default: 600
+    height: 400,        // default: 600
     antialias: true,    // default: false
     transparent: false, // default: false
     resolution: 1       // default: 1
   }
 );
 
-let imagesStore = {
-  header: "header.png",
-  showdown_off: "showdown-off.png",
-  bolt_off: "bolt-off@2x.png",
-  bolt: "bolt@2x.png",
-  d: "d@2x.png",
-  h: "h@2x.png",
-  must_drop: "must_drop.png",
-  n: "n@2x.png",
-  o_1: "o-1@2x.png",
-  o_2: "o-2@2x.png",
-  s: "s@2x.png",
-  slots: "slots@2x.png",
-  vegas: "vegas@2x.png",
-  w_1: "w-1@2x.png",
-  w_2: "w-2@2x.png",
-}
-
+//Object for holding all sprites objects
 const Sprites = {};
 
-const createAnimationQ = ({
-  spritesArray,
-  animationProperty,
-  animateToValue,
-  delay,
-  duration,
-}) => {
-  const animationQ = [];
-  let time = 0;
-  spritesArray.forEach( (sprite) => {
-    time+=delay;
-    animationQ.push(
-      {
-        sprite,
-        animationProperty,
-        animateToValue,
-        duration,
-        startTime:time
-      }
-    )
-  });
-  return animationQ;
-}
-
-const processAnimationQ = (animationQ, timeFrame) => {
-  animationQ.map( (element, index) => {
-    element.startTime-=timeFrame;
-    if(element.startTime <= 0 ) {
-
-      //startTime is now negative so when we use abs value, we have time from start of the animation
-      element.sprite[element.animationProperty] = element.animateToValue * (Math.abs(element.startTime)/element.duration);
-      //when animation is finish remove element from array and equalize value
-      if(Math.abs(element.sprite[element.animationProperty]-element.animateToValue) < 0.05) {
-        element.sprite[element.animationProperty] = element.animateToValue;
-        animationQ.splice(index, 1);
-      }
-    }
-  });
-}
 
 
+//copy imagesNames object to local constangt
+const imagesNames = Object.assign({}, Config.imagesNames);
 //convert to relative paths based, on path specified in config.js
-Object.keys(imagesStore).forEach((key) => {
-  imagesStore[key] = utils.path(imagesStore[key]);
+Object.keys(imagesNames).forEach((key) => {
+  imagesNames[key] = utils.path(imagesNames[key]);
 });
 
 //load all textures
-Object.keys(imagesStore).forEach((key) => {
-  PIXI.loader.add(imagesStore[key]);
+Object.keys(imagesNames).forEach((key) => {
+  PIXI.loader.add(imagesNames[key]);
 });
 
 
@@ -88,21 +35,24 @@ PIXI.loader.load(setup);
 
 function setup() {
 
-  //create sprites
-  Object.keys(imagesStore).forEach((key) => {
+  //create sprites from textures
+  Object.keys(imagesNames).forEach((key) => {
     Sprites[key] = new PIXI.Sprite(
-      PIXI.loader.resources[imagesStore[key]].texture
+      PIXI.loader.resources[imagesNames[key]].texture
     );
-    Sprites[key] = Object.assign(Sprites[key], Config.SpritesPos[key]);
+    Sprites[key] = Object.assign(Sprites[key], Config.SpritesPositions[key]);
   });
 
-
+  Sprites.must_drop.scale.x = 0.65;
+  Sprites.must_drop.scale.y = 0.65;
   window.Sprites = Sprites;
+
   //add all sprites to stage
   Object.keys(Sprites).forEach((sprite) => {
     PixiApp.stage.addChild(Sprites[sprite]);
   })
 
+  //Array with letters for SHOWDOWN
   const SHOWDOWN = [  
     Sprites.s,
     Sprites.h,
@@ -113,106 +63,183 @@ function setup() {
     Sprites.w_2,
     Sprites.n
   ]
-/*
-  sprite,
-  animationProperty,
-  animateToValue,
-  duration,
-  startTime:time
-*/
-  const VegasAnimationQ = [
-    {
-      sprite: Sprites.vegas,
+
+
+  const VegasAnimationQ = animationQ.animateGroup({
+    Sprites: [
+      Sprites.vegas,
+      Sprites.slots
+    ],
+    startTime: 0,
+    animations: [
+      {
       animationProperty: 'alpha',
       animateToValue: 1,
-      duration: 20 * PLAYBACK_SPEED,
-      startTime: 90 * PLAYBACK_SPEED
-    },
-    {
-      sprite: Sprites.slots,
-      animationProperty: 'alpha',
-      animateToValue: 1,
-      duration: 20 * PLAYBACK_SPEED,
-      startTime: 90 * PLAYBACK_SPEED
-    },
-    {
-      sprite: Sprites.vegas,
-      animationProperty: 'alpha',
-      animateToValue: 0,
-      duration: 10 * PLAYBACK_SPEED,
-      startTime: 110 * PLAYBACK_SPEED
-    },
-    {
-      sprite: Sprites.slots,
-      animationProperty: 'alpha',
-      animateToValue: 0,
-      duration: 10 * PLAYBACK_SPEED,
-      startTime: 110 * PLAYBACK_SPEED
-    },
-    {
-      sprite: Sprites.vegas,
-      animationProperty: 'alpha',
-      animateToValue: 1,
-      duration: 20 * PLAYBACK_SPEED,
-      startTime: 120 * PLAYBACK_SPEED
-    },
-    {
-      sprite: Sprites.slots,
-      animationProperty: 'alpha',
-      animateToValue: 1,
-      duration: 20 * PLAYBACK_SPEED,
-      startTime: 120 * PLAYBACK_SPEED
-    },
-    {
-      sprite: Sprites.vegas,
-      animationProperty: 'alpha',
-      animateToValue: 0,
-      duration: 10 * PLAYBACK_SPEED,
-      startTime: 140 * PLAYBACK_SPEED
-    },
-    {
-      sprite: Sprites.slots,
-      animationProperty: 'alpha',
-      animateToValue: 0,
-      duration: 10 * PLAYBACK_SPEED,
-      startTime: 140 * PLAYBACK_SPEED
-    },
-    {
-      sprite: Sprites.vegas,
-      animationProperty: 'alpha',
-      animateToValue: 1,
-      duration: 20 * PLAYBACK_SPEED,
-      startTime: 150 * PLAYBACK_SPEED
-    },
-    {
-      sprite: Sprites.slots,
-      animationProperty: 'alpha',
-      animateToValue: 1,
-      duration: 20 * PLAYBACK_SPEED,
-      startTime: 150 * PLAYBACK_SPEED
-    }
-  ]
+      duration: 50,
+      delay: 450, 
+      },
+      {
+        animationProperty: 'alpha',
+        animateToValue: 0,
+        duration: 100,
+        delay: 550, 
+      },
+      {
+        animationProperty: 'alpha',
+        animateToValue: 1,
+        duration: 50,
+        delay: 750,
+      },
+      {
+        animationProperty: 'alpha',
+        animateToValue: 0,
+        duration: 50,
+        delay: 855,
+      },
+      {
+        animationProperty: 'alpha',
+        animateToValue: 1,
+        duration: 50,
+        delay: 1250,
+      },
+    ]
+  })
 
   const AnimationContainer = document.getElementById('showdown_animation');
   AnimationContainer.append(PixiApp.view);
   
   let ticker = PIXI.ticker.shared;
   ticker.autoStart = false;
+  ticker.speed = PLAY_SPEED;
   ticker.stop();
   ticker.start();
-  console.log('animation q');
-  const animationQ = createAnimationQ({
+  const showdownQ = animationQ.animateInOrder({
     spritesArray: SHOWDOWN,
     animationProperty: 'alpha',
     animateToValue: 1,
-    duration: 20 * PLAYBACK_SPEED,
-    delay: 100 * PLAYBACK_SPEED
+    duration: 50,
+    delay: 150,
+    startTime: 800 
   });
 
-  ticker.add(function (frameTime) {
-    processAnimationQ(animationQ, frameTime);
-    processAnimationQ(VegasAnimationQ, frameTime);
-  });
-  console.log(animationQ);
+  /*
+    sprite: sprite,
+  animationProperty: animation.animationProperty,
+  animateToValue: animation.animateToValue,
+  duration: animation.duration,
+  startTime: startTime + animation.delay,
+  timeToAnimate: startTime + animation.dela
+  */
+  const animationBoltCycle = [
+    {
+      animateToValue: 1,
+      duration: 30,
+      delay: 0,
+    },
+    {
+      animateToValue: 0,
+      duration: 50,
+      delay: 100,
+    },
+    {
+      animateToValue: 1,
+      duration: 25,
+      delay: 250,
+    },
+    {
+      animateToValue: 0,
+      duration: 60,
+      delay: 290,
+    },
+    {
+      animateToValue: 1,
+      duration: 30,
+      delay: 350,
+    },
+    {
+      animateToValue: 0,
+      duration: 55,
+      delay: 390,
+    },
+    {
+      animateToValue: 1,
+      duration: 20,
+      delay: 500,
+    },
+  ]
 
+  const repeatAnimation = ({
+    sprite,
+    animationProperty,
+    animations,
+    startTime,
+    cycleTime, 
+    repeatNumber
+  }) => {
+    const animationQ = [];
+    for( let n =0; n< repeatNumber; n++) {
+      animations.forEach( (animation) => {
+        animationQ.push({
+          sprite: sprite,
+          timeToAnimate: startTime + animation.delay + (cycleTime * n),
+          startTime: startTime + animation.delay + (cycleTime * n),
+          animationProperty: animationProperty,
+          animateToValue: animation.animateToValue,
+          duration: animation.duration
+        });
+      });
+    }
+    return animationQ;
+  }
+
+  const animationQBolt = repeatAnimation({
+    sprite: Sprites.bolt,
+    animationProperty: 'alpha',
+    startTime: 1500,
+    cycleTime: 600,
+    repeatNumber: 3,
+    animations: animationBoltCycle
+  });
+
+  const mustDropQ = repeatAnimation({
+    sprite: Sprites.must_drop,
+    animationProperty: 'alpha',
+    startTime: 3000,
+    cycleTime: 0,
+    repeatNumber: 1,
+    animations: [
+      {
+        animateToValue: 1,
+        duration: 50,
+        delay: 0,
+      },
+      {
+        animateToValue: 0,
+        duration: 30,
+        delay: 90,
+      },
+      {
+        animateToValue: 1,
+        duration: 40,
+        delay: 150,
+      },
+      {
+        animateToValue: 0,
+        duration: 30,
+        delay: 150,
+      },
+      {
+        animateToValue: 1,
+        duration: 40,
+        delay: 170,
+      },
+    ]
+  })
+
+  ticker.add(function () {
+    animationQ.process(showdownQ, PIXI.ticker.shared.elapsedMS * PLAY_SPEED);
+    animationQ.process(VegasAnimationQ, PIXI.ticker.shared.elapsedMS * PLAY_SPEED);
+    animationQ.process(animationQBolt, PIXI.ticker.shared.elapsedMS * PLAY_SPEED);
+    animationQ.process(mustDropQ, PIXI.ticker.shared.elapsedMS * PLAY_SPEED);
+  });
 }
