@@ -44,7 +44,6 @@ const setupDOM = () => {
   DOM.wheelContainer = document.getElementById(Config.wheelDomRootID);
   
   DOM.wheelImage.src = utils.path(Config.imagesNamesWheel.wheel, Config.assetsPathWheel);
-  DOM.wheel.classList.add(Config.rotationClass);
   DOM.wheel.id=Config.spinningWheelID;
   
   DOM.button.id = Config.buttonID;
@@ -76,6 +75,12 @@ const spinToSelectedPosition = (chosenPosition) => {
   if(SPINNER.angle === stopAngle) {
     stopAngle += mathUtils.numberOfSpins(1);
   }
+  console.log({
+    animateTo: SPINNER.angle,
+    startAngle: stopAngle,
+    duration
+  })
+
   //applying changed rotation to keyframes
   keyframesTools.changeRotationAnimation({
     rotationClassName: Config.rotationClass,
@@ -101,25 +106,30 @@ const wheelInit = () => {
           throw new Error('incorrect data format');
         }
 
-        //clear error message
-        DOM.errorField.innerText = '';
-        //reseting animation
-        void DOM.wheel.offsetWidth;
-        DOM.wheel.classList.add(Config.rotationClass);
+
     
         //start animation
         
         spinToSelectedPosition(request.data.POSITION);
+        //clear error message
+        DOM.errorField.innerText = '';
+        //reseting animation
+        void DOM.wheel.offsetWidth;
+        
+        document.querySelector('body').addEventListener('animationend', () => {
+          console.log('end');
+        });
+        DOM.wheel.classList.add(Config.rotationClass);
 
         function clearAnimation() {
+          console.log('clear animation');
           DOM.button.disabled = false;
           DOM.wheel.classList.remove(Config.rotationClass);
           DOM.wheel.style.transform = `rotate(${selectPosition(request.data.POSITION)}deg)`; 
           DOM.wheel.removeEventListener('animationend', clearAnimation);
         }
-        DOM.wheel.addEventListener('animationend', (clearAnimation));
+        DOM.wheel.addEventListener('animationend', clearAnimation);
       }).catch( (error) => {
-        console.error(error);
         DOM.errorField.innerText = Config.wheelErrorMsg;
         DOM.button.disabled = false;
       });

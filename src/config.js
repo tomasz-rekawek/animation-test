@@ -13,12 +13,11 @@ const CONFIG = {
 
   //id of the dom element that wheel applicaion will attach
   wheelDomRootID: 'wheel',
-  //path to assets with showdown app images
 
+  //path to assets with showdown app images
   assetsPathShowdown : '/assets/images/showdown/',
   //path to assets with wheel app images
   assetsPathWheel : '/assets/images/wheel/',
-  
   
   //className with animations for wheel application
   rotationClass: 'rotate-center',

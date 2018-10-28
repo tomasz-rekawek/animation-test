@@ -38,6 +38,9 @@ const findKeyframesRules = (name) => {
 const changeRotationAnimation = ({rotationClassName, startAngle, stopAngle}) => {
   
   const keyframesObject = findKeyframesRules(rotationClassName);
+  console.log({
+    keyframesObject
+  })
   modifyKeyFrames(keyframesObject, 'deleteRule', '0%');
   modifyKeyFrames(keyframesObject, 'deleteRule', '100%');
 
@@ -124,8 +127,9 @@ const findSelectorRules = (selectorName) => {
  */
 const changeAnimationDuration = (selectorName, duration) => {
   const selectorRules = findSelectorRules(selectorName);
+  console.log('selectorRules', selectorRules.style);
   selectorRules.style.animation = `rotate-center ${duration} ease-in-out both`;
-  selectorRules.style.webkitAnimation = 'rotate-center ${duration} ease-in-out both';
+  selectorRules.style.webkitAnimation = `rotate-center ${duration} ease-in-out both`;
 }
 
 
