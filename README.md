@@ -69,3 +69,4 @@ Possible improvments i could implement
 1. Add preloading of assets
 2. Dont't use PIXI, as i discovered during development of this project PIXI modifies prototypes of native javascript, and that could be a problem in some client applications
 3. Better organize config.js
+4. Add optimizer in webpack for images, they are really big
