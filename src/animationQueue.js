@@ -46,7 +46,6 @@ const _process = (animationQ, timeFrame, executeWhenFinished) => {
 const process = (animationQ, timeFrame) => {
   _process(animationQ, timeFrame, (props) => {
     //in normal processing we remove element when animation is finished
-    console.log('slice', props.element);
     props.animationQ.splice(props.index, 1);
   })
 }
@@ -66,7 +65,6 @@ const animateGroup = ({
 }) => {
   const animationQ = [];
   animations.forEach((animation) => {
-    console.log(animation);
     Sprites.forEach((sprite) => {
       animationQ.push({
         sprite: sprite,

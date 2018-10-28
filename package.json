@@ -4,7 +4,7 @@
   "description": "Test tasks",
   "main": "index.js",
   "scripts": {
-    "start": "webpack-dev-server --open --mode=development",
+    "start": "webpack-dev-server --open --mode=development --host 0.0.0.0",
     "watch": "webpack --watch",
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "node_modules/.bin/webpack --config webpack.config.js --mode=production"
@@ -15,6 +15,7 @@
     "@babel/core": "^7.1.2",
     "@babel/plugin-proposal-object-rest-spread": "^7.0.0",
     "@babel/preset-env": "^7.1.0",
+    "axios": "^0.18.0",
     "babel-loader": "^8.0.4",
     "clean-webpack-plugin": "^0.1.16",
     "copy-webpack-plugin": "^4.5.4",

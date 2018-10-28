@@ -23,7 +23,6 @@ module.exports = {
     }),
     new CopyWebpackPlugin([ { from: 'assets', to: 'assets' } ])
   ],
-  devtool: 'inline-source-map',
   module: {
     rules: [
       {

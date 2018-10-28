@@ -3,14 +3,85 @@ body {
   padding:0;
   margin:0;
 }
+
+#container { 
+  display:flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  align-content: center;
+}
+
 #showdown_animation {
-  width:100%;
-  position: relative;
 }
 
 #showdown_animation canvas{
+  width:100%;
+  max-width:800px;
+}
+
+#wheel{
+  max-width:100%;
+  overflow:hidden;
+}
+#wheel div#spinner {
+}
+#wheel div img {
+  max-width:100%;
+}
+
+.rotate-center {
+	-webkit-animation: rotate-center 0.6s ease-in-out both;
+	        animation: rotate-center 0.6s ease-in-out both;
+}
+
+#button {
+  max-width:100%;
   margin:0 auto;
+	background: none;
+	color: inherit;
+	border: none;
+	padding: 0;
+	font: inherit;
+	cursor: pointer;
+  outline: inherit;
   position: relative;
-  display:block;
+  top: auto;
+  left: auto;
+}
+
+#button img {
+  max-width:100%;
+}
+
+#button[disabled] {
+  opacity:0.8;
+  pointer-events: none;
+}
+
+.error-field { 
+  color:#ff1133;
+  text-align:center;
+  width: 100%;
+}
+
+@-webkit-keyframes rotate-center {
+  0% {
+    -webkit-transform: rotate(0);
+            transform: rotate(0);
+  }
+  100% {
+    -webkit-transform: rotate(0);
+            transform: rotate(0);
+  }
+}
+@keyframes rotate-center {
+  0% {
+    -webkit-transform: rotate(0);
+            transform: rotate(0);
+  }
+  100% {
+    -webkit-transform: rotate(0);
+            transform: rotate(0);
+  }
 }
 

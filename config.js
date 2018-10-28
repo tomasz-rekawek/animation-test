@@ -1,6 +1,40 @@
 const CONFIG = {
-  assetsPath : '/assets/images/',
-  imagesNames: {
+  
+  //if turn on doesn't expose global init functions
+  noConflictMode: false,
+
+  //function name exposed to window to initialise wheel app 
+  //change in case its colliding in your system 
+  wheelInitFunction: 'wheelInit',
+
+  //id of the dom element that wheel applicaion will attach
+  wheelDomRootID: 'wheel',
+  //path to assets with showdown app images
+  assetsPathShowdown : '/assets/images/showdown/',
+  //path to assets with wheel app images
+  assetsPathWheel : '/assets/images/wheel/',
+  
+  //className with animations for wheel application
+  rotationClass: 'rotate-center',
+
+  //id name of the spinning wheel
+  spinningWheelID: 'spinner',
+
+  //id name of the button in wheel application
+  buttonID: 'button',
+
+  //error message when request fails
+  wheelErrorMsg: 'Ups, something went wront try again later',
+  wheelErrorMsgClass: 'error-field',
+  //names of assets for wheel application
+  imagesNamesWheel: {
+    wheel: 'wheel.png',
+    marker: 'marker.png',
+    button: 'btn-spin.png'
+  },
+
+  //names of assets for showdown application
+  imagesNamesShowdown: {
     header: "header.png",
     showdown_off: "showdown-off.png",
     bolt_off: "bolt-off@2x.png",
@@ -17,6 +51,8 @@ const CONFIG = {
     w_2: "w-2@2x.png",
     must_drop: "must_drop.png",
   },
+
+  //initial sprite configuration for showdown application
   SpritesPositions: {
     bolt: {
       x: 345,
@@ -91,7 +127,5 @@ const CONFIG = {
     }
   }
 }
-
-
 
 export default CONFIG;
