@@ -1,5 +1,3 @@
-
-
 /**
  * @typedef {Object} keyframesRules
  * @property {Object} webkit webkit keyframe object

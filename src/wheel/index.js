@@ -108,10 +108,7 @@ const wheelInit = () => {
           throw new Error('incorrect data format');
         }
 
-
-    
         //start animation
-        
         spinToSelectedPosition(request.data.POSITION);
         //clear error message
         DOM.errorField.innerText = '';

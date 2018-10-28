@@ -1,5 +1,5 @@
 const CONFIG = {
-  
+
   //if turn on doesn't expose global init functions
   noConflictMode: true,
 

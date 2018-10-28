@@ -1,5 +1,4 @@
 /**
- * 
  * @param {Object} param
  * @param {Array} param.spritesArray - array with sprites to animate
  * @param {Number} param.animateToValue - value to tween to
@@ -110,7 +109,6 @@ const animateGroup = ({
   })
   return animationQ;
 }
-
 
 export default {
   animateGroup,
