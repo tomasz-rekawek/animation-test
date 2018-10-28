@@ -1,7 +1,7 @@
-import wheelInit from './wheel';
+import wheelInit from './wheel/';
 
 wheelInit();
 
-import initShowdown from './showdown';
+import initShowdown from './showdown/';
 
 initShowdown();

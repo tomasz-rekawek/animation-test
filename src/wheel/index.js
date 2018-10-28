@@ -1,7 +1,7 @@
 import Config from '../config';
-import utils from './utils';
+import utils from '../utils';
 import keyframesTools from './keyframesTools';
-import mathUtils from './mathUtils';
+import mathUtils from '../mathUtils';
 import Axios from 'axios';
 import DOMtools from './DOMtools.js';
 

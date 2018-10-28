@@ -1,6 +1,6 @@
 
 import {Application, Sprite, ticker, loader} from 'pixi.js' ;
-import utils from './utils';
+import utils from '../utils';
 import Config from '../config';
 import animationQ from './animationQueue';
 
@@ -51,7 +51,6 @@ const initShowdown = () => {
 
     Sprites.must_drop.scale.x = 0.65;
     Sprites.must_drop.scale.y = 0.65;
-    window.Sprites = Sprites;
 
     //add all sprites to stage
     Object.keys(Sprites).forEach((sprite) => {
