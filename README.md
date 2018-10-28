@@ -6,7 +6,7 @@
 
 - [Installation](#installation)
 - [Deployment](#deployment)
-- [Improvments] (#improvments)
+- [Improvements] (#improvements)
 
 
 ## Installation
@@ -63,7 +63,7 @@ import `src/showdown/index.js` and `src/wheel/index.js`
 
 they both expose init functions
 
-### improvments
+### improvements
 Possible improvments i could implement
 
 1. Add preloading of assets
