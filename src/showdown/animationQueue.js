@@ -59,7 +59,7 @@ const _process = (animationQ, timeFrame, executeWhenFinished) => {
 }
 
 /**
- * animate animation q to be used in ticker
+ * animate animationQ to be used in ticker
  * @param {animationQ} animationQ 
  * @param {Number} timeFrame - time between frames in ms
  */

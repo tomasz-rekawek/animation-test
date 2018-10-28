@@ -26,13 +26,22 @@ body {
   flex-direction: column;
   flex-wrap: nowrap;
   align-content: center;
-}
-#wheel div#spinner {
-  text-align:center;
-}
-#wheel div img {
-  width:100%;
-  max-width:300px;
+  .marker {
+    position: absolute;
+    left: calc(50% - 25px);
+    margin-top: -22px;
+    z-index:3;
+  }
+  div#spinner {
+    margin-top:20px;
+    text-align:center;
+    z-index:2;
+    transform: rotate(45deg);
+    img {
+      width:100%;
+      max-width:300px;
+    }
+  }
 }
 
 
@@ -49,6 +58,7 @@ body {
   position: relative;
   top: auto;
   left: auto;
+  z-index:4;
 }
 
 #button img {

@@ -11,6 +11,8 @@ const CONFIG = {
   //change in case its colliding in your system 
   showdownInitFunction: 'showdownInit',
 
+  markerClass: 'marker',
+
   //id of the dom element that wheel applicaion will attach
   wheelDomRootID: 'wheel',
 

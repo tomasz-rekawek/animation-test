@@ -38,9 +38,7 @@ const findKeyframesRules = (name) => {
 const changeRotationAnimation = ({rotationClassName, startAngle, stopAngle}) => {
   
   const keyframesObject = findKeyframesRules(rotationClassName);
-  console.log({
-    keyframesObject
-  })
+
   modifyKeyFrames(keyframesObject, 'deleteRule', '0%');
   modifyKeyFrames(keyframesObject, 'deleteRule', '100%');
 
@@ -69,8 +67,13 @@ const changeRotationAnimation = ({rotationClassName, startAngle, stopAngle}) => 
  * @param {*} param - param to apply
  */
 const modifyKeyFrames = (keyframesObject, action, param) => {
-  keyframesObject.webkit[action](param);
-  keyframesObject.default[action](param);
+  //first check if method exist then execute
+  if(keyframesObject.webkit && keyframesObject.webkit[action]) { 
+    keyframesObject.webkit[action](param);
+  }
+  if(keyframesObject.default && keyframesObject.default[action]) {
+    keyframesObject.default[action] && keyframesObject.webkit[action](param);
+  }
 }
 /**
  * appends keyframes rules
@@ -85,19 +88,23 @@ const insertRule  = (keyframesObject, rule) => {
   ]
 
   const methodNameVariations = [
-    'insertRule',
-    'appendRule'
+    //call append rule first
+    'appendRule',
+    //eventually deprecated insertRule for older browsers
+    'insertRule'
   ]
   
   //some older browsers use insertRule
   //others use appendRule
   //checking for existence of method and calling it
   prefixes.forEach( (prefix) => {
-    methodNameVariations.forEach( (methodName) => {
-      if(keyframesObject[prefix][methodName]) {
+    for(let i=0; i< methodNameVariations.length; i++) {
+      const methodName = methodNameVariations[i];
+      if(keyframesObject[prefix] && keyframesObject[prefix][methodName]) {
         keyframesObject[prefix][methodName](rule);
+        break;
       }
-    })
+    }
   });
 }
 
@@ -127,7 +134,6 @@ const findSelectorRules = (selectorName) => {
  */
 const changeAnimationDuration = (selectorName, duration) => {
   const selectorRules = findSelectorRules(selectorName);
-  console.log('selectorRules', selectorRules.style);
   selectorRules.style.animation = `rotate-center ${duration} ease-in-out both`;
   selectorRules.style.webkitAnimation = `rotate-center ${duration} ease-in-out both`;
 }

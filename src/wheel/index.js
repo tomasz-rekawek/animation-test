@@ -28,11 +28,13 @@ const DOM = {
   wheelImage: 'img',
   button: 'button',
   buttonImage: 'img',
-  errorField: 'div'
+  errorField: 'div',
+  marker: 'div',
+  markerImage: 'img'
 }
 //object to hold at what angle the spinner stopped
 const SPINNER = {
-  angle: 0,
+  angle: 45,
 }
 //adding dom elements
 //in doing it vanilla.js style
@@ -53,6 +55,10 @@ const setupDOM = () => {
 
   DOM.wheel.appendChild(DOM.wheelImage);
   DOM.button.appendChild(DOM.buttonImage);
+  DOM.markerImage.src=utils.path(Config.imagesNamesWheel.marker, Config.assetsPathWheel);
+  DOM.marker.appendChild(DOM.markerImage);
+  DOM.marker.classList.add(Config.markerClass);
+  DOM.wheelContainer.appendChild(DOM.marker);
   DOM.wheelContainer.appendChild(DOM.wheel);
   DOM.wheelContainer.appendChild(DOM.button);
   DOM.wheelContainer.appendChild(DOM.errorField);
@@ -75,11 +81,7 @@ const spinToSelectedPosition = (chosenPosition) => {
   if(SPINNER.angle === stopAngle) {
     stopAngle += mathUtils.numberOfSpins(1);
   }
-  console.log({
-    animateTo: SPINNER.angle,
-    startAngle: stopAngle,
-    duration
-  })
+ 
 
   //applying changed rotation to keyframes
   keyframesTools.changeRotationAnimation({
@@ -116,13 +118,9 @@ const wheelInit = () => {
         //reseting animation
         void DOM.wheel.offsetWidth;
         
-        document.querySelector('body').addEventListener('animationend', () => {
-          console.log('end');
-        });
         DOM.wheel.classList.add(Config.rotationClass);
 
         function clearAnimation() {
-          console.log('clear animation');
           DOM.button.disabled = false;
           DOM.wheel.classList.remove(Config.rotationClass);
           DOM.wheel.style.transform = `rotate(${selectPosition(request.data.POSITION)}deg)`; 
@@ -130,6 +128,7 @@ const wheelInit = () => {
         }
         DOM.wheel.addEventListener('animationend', clearAnimation);
       }).catch( (error) => {
+        console.error(error);
         DOM.errorField.innerText = Config.wheelErrorMsg;
         DOM.button.disabled = false;
       });

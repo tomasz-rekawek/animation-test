@@ -93,7 +93,7 @@ const initShowdown = () => {
           animationProperty: 'alpha',
           animateToValue: 1,
           duration: 50,
-          delay: 1250,
+          delay: 1350,
         },
       ]
     })
@@ -120,7 +120,7 @@ const initShowdown = () => {
       animationProperty: 'alpha',
       animateToValue: 1,
       duration: 50,
-      delay: 150,
+      delay: 200,
       startTime: 800 
     });
 
@@ -235,7 +235,7 @@ const initShowdown = () => {
         {
           animateToValue: 1,
           duration: 40,
-          delay: 170,
+          delay: 240,
         },
       ]
     })
