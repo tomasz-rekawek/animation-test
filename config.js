@@ -1,11 +1,15 @@
 const CONFIG = {
   
   //if turn on doesn't expose global init functions
-  noConflictMode: false,
+  noConflictMode: true,
 
   //function name exposed to window to initialise wheel app 
   //change in case its colliding in your system 
   wheelInitFunction: 'wheelInit',
+
+  //function name exposed to window to initialise showdown app 
+  //change in case its colliding in your system 
+  showdownInitFunction: 'showdownInit',
 
   //id of the dom element that wheel applicaion will attach
   wheelDomRootID: 'wheel',

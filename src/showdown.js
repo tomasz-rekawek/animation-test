@@ -198,6 +198,16 @@ const initShowdown = () => {
       animations: animationBoltCycle
     });
 
+
+    const animationQBoltInfinite = repeatAnimation({
+      sprite: Sprites.bolt,
+      animationProperty: 'alpha',
+      startTime: 10000,
+      cycleTime: 600,
+      repeatNumber: 1,
+      animations: animationBoltCycle
+    });
+
     const mustDropQ = repeatAnimation({
       sprite: Sprites.must_drop,
       animationProperty: 'alpha',
@@ -234,12 +244,27 @@ const initShowdown = () => {
     })
 
     ticker.add(function () {
+      //animation of SHODOWN letters fading in
       animationQ.process(showdownQ, PIXI.ticker.shared.elapsedMS * PLAY_SPEED);
+      
+      //vegas slots flickering
       animationQ.process(VegasAnimationQ, PIXI.ticker.shared.elapsedMS * PLAY_SPEED);
+      
+      //bolt flickering
       animationQ.process(animationQBolt, PIXI.ticker.shared.elapsedMS * PLAY_SPEED);
+      
+      //must drop flickering
       animationQ.process(mustDropQ, PIXI.ticker.shared.elapsedMS * PLAY_SPEED);
+      
+      //infinite bolt flickering every 10 seconds
+      animationQ.processInifinite(animationQBoltInfinite, PIXI.ticker.shared.elapsedMS * PLAY_SPEED);
     });
   }
+}
+
+//exposing initialise function to window if noConflict === true
+if(!Config.noConflictMode) {
+  window[Config.showdownInitFunction] = initShowdown;
 }
 
 export default initShowdown;
