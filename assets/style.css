@@ -12,21 +12,28 @@ body {
 }
 
 #showdown_animation {
+  margin:0 auto;
 }
 
 #showdown_animation canvas{
   width:100%;
-  max-width:800px;
+  max-width:500px;
 }
 
 #wheel{
   max-width:100%;
   overflow:hidden;
+  display:flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  align-content: center;
 }
 #wheel div#spinner {
+  text-align:center;
 }
 #wheel div img {
-  max-width:100%;
+  width:100%;
+  max-width:300px;
 }
 
 .rotate-center {
