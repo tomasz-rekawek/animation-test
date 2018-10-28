@@ -8,8 +8,8 @@ const numberOfSpins = (n) => {
 }
 
 /**
- * @param {number} a - lesser number
- * @param {number} b - bigger number
+ * @param {number} a - min number
+ * @param {number} b - max number
  * @returns {number} between a and b
  */
 const randomNumberBetween = (a,b) => {
