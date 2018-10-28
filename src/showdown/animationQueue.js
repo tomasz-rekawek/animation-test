@@ -1,3 +1,13 @@
+/**
+ * 
+ * @param {Object} param
+ * @param {Array} param.spritesArray - array with sprites to animate
+ * @param {Number} param.animateToValue - value to tween to
+ * @param {Number} param.delay - time in ms between animations
+ * @param {Number} param.startTime - time in ms when the whole animation will start
+ * 
+ * @returns {animationQ} 
+ */
 const animateInOrder = ({
   spritesArray,
   animationProperty,
@@ -24,7 +34,12 @@ const animateInOrder = ({
   return animationQ;
 }
 
-
+/**
+ * 
+ * @param {animationQ} animationQ - object with animation
+ * @param {number} timeFrame - time passed between frames in ms
+ * @param {functio } executeWhenFinished - function executed when animation is finished
+ */
 const _process = (animationQ, timeFrame, executeWhenFinished) => {
   animationQ.map( (element, index) => {
     element.timeToAnimate-=timeFrame;
@@ -43,13 +58,22 @@ const _process = (animationQ, timeFrame, executeWhenFinished) => {
   });
 }
 
+/**
+ * animate animation q to be used in ticker
+ * @param {animationQ} animationQ 
+ * @param {Number} timeFrame - time between frames in ms
+ */
 const process = (animationQ, timeFrame) => {
   _process(animationQ, timeFrame, (props) => {
     //in normal processing we remove element when animation is finished
     props.animationQ.splice(props.index, 1);
   })
 }
-
+/**
+ * animate animationQ in infitie loop
+ * @param {animationQ} animationQ 
+ * @param {Number} timeFrame - time between frames in ms
+ */
 const processInifinite = (animationQ, timeFrame) => {
   _process(animationQ, timeFrame, (props => {
     props.element.timeToAnimate = props.element.startTime;
@@ -57,7 +81,14 @@ const processInifinite = (animationQ, timeFrame) => {
 }
 
 
-
+/**
+ * Animate group of objects
+ * @param {Object} param
+ * @param {Array} param.Sprites - array with sprites to animate
+ * @param {Array} param.animations - array with animations
+ * 
+ * @returns {animationQ}
+ */
 const animateGroup = ({
   Sprites,
   startTime,

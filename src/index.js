@@ -1,7 +1,6 @@
 import wheelInit from './wheel/';
-
-wheelInit();
-
 import initShowdown from './showdown/';
+import '../styles/index.scss';
 
 initShowdown();
+wheelInit();

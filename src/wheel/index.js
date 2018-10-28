@@ -5,6 +5,11 @@ import mathUtils from '../mathUtils';
 import Axios from 'axios';
 import DOMtools from './DOMtools.js';
 
+/**
+ * 
+ * @param {number} position - position to stop the spiner on
+ * @returns {number} angle in deg coresponding to position
+ */
 const selectPosition = (position) => {
   const positions = {
     1: 45,
@@ -15,8 +20,8 @@ const selectPosition = (position) => {
   return positions[position];
 }
 
-//Add required elements to the dom
 
+//configuration of dom elements
 const DOM = {
   wheelContainer: 'div',
   wheel: 'div',
@@ -25,11 +30,14 @@ const DOM = {
   buttonImage: 'img',
   errorField: 'div'
 }
-
+//object to hold at what angle the spinner stopped
 const SPINNER = {
   angle: 0,
 }
-
+//adding dom elements
+//in doing it vanilla.js style
+//because i dedcided that for such a small project
+//there is no reason to add templating engine
 const setupDOM = () => {
 
   DOMtools.transformObjectToDOMElements(DOM);
@@ -58,8 +66,8 @@ const setupDOM = () => {
  */
 const spinToSelectedPosition = (chosenPosition) => {
 
-  //seting random duration between 3 and 5.5 seconds
-  const duration = mathUtils.randomNumberBetween(30, 55)/10;
+  //seting random duration between 2 and 3 seconds
+  const duration = mathUtils.randomNumberBetween(10, 20)/10;
 
   //randomaizing the desired angle adding between 1-3 full rotations
   let stopAngle = selectPosition(chosenPosition) + mathUtils.numberOfSpins(mathUtils.randomNumberBetween(1,3));
@@ -68,7 +76,6 @@ const spinToSelectedPosition = (chosenPosition) => {
   if(SPINNER.angle === stopAngle) {
     stopAngle += mathUtils.numberOfSpins(1);
   }
-
   //applying changed rotation to keyframes
   keyframesTools.changeRotationAnimation({
     rotationClassName: Config.rotationClass,
@@ -111,7 +118,8 @@ const wheelInit = () => {
           DOM.wheel.removeEventListener('animationend', clearAnimation);
         }
         DOM.wheel.addEventListener('animationend', (clearAnimation));
-      }).catch( () => {
+      }).catch( (error) => {
+        console.error(error);
         DOM.errorField.innerText = Config.wheelErrorMsg;
         DOM.button.disabled = false;
       });

@@ -58,8 +58,6 @@ const initShowdown = () => {
     })
 
     //Array with letters for SHOWDOWN
-
-
     const VegasAnimationQ = animationQ.animateGroup({
       Sprites: [
         Sprites.vegas,
